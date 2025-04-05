@@ -15,7 +15,7 @@ import { TaskType } from "@/types/Task";
 export default function SearchBar() {
   const { setSearchTerm, setFilterType } = useTaskContext();
   const [localSearchTerm, setLocalSearchTerm] = React.useState("");
-  const [localFilterType, setLocalFilterType] = React.useState<TaskType | "">("");
+  const [localFilterType, setLocalFilterType] = React.useState<TaskType | "all">("all");
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalSearchTerm(e.target.value);
@@ -27,9 +27,9 @@ export default function SearchBar() {
     setSearchTerm("");
   };
 
-  const handleFilterChange = (value: TaskType | "") => {
+  const handleFilterChange = (value: TaskType | "all") => {
     setLocalFilterType(value);
-    setFilterType(value);
+    setFilterType(value === "all" ? "" : value);
   };
 
   return (
@@ -62,7 +62,7 @@ export default function SearchBar() {
             <SelectValue placeholder="Filter by type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Types</SelectItem>
+            <SelectItem value="all">All Types</SelectItem>
             <SelectItem value="personal">Personal</SelectItem>
             <SelectItem value="work">Work</SelectItem>
             <SelectItem value="study">Study</SelectItem>
